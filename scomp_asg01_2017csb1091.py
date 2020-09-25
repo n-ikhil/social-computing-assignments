@@ -7,11 +7,11 @@ def analyze_network(G):
     nNodes = G.order()
     nEdges = G.size()
     avDeg = (2 * nEdges) / nNodes if nNodes > 0 else 0
-    avClusCoef = nx.average_clustering(G) if nNodes > 0 else 0
-    print("\nNumber of nodes = " + str(nNodes),
+    avClusCoef = nx.average_clustering(G) if nNodes > 2 else 0
+    print("Number of nodes = " + str(nNodes),
           "\nNumber of edges = " + str(nEdges),
           "\nAverage degree  = " + str(avDeg),
-          "\nAverage clustering coefficient = " + str(avClusCoef), "\n")
+          "\nAverage clustering coefficient = " + str(avClusCoef))
 
 
 def find_num_edges(n):
@@ -35,13 +35,15 @@ def find_num_comm(G):
         remEdge = max(betsAsList, key=lambda item: item[1])
         remEdge = remEdge[0]
         G.remove_edge(*remEdge)
-    print("\nNumber of communities = ", nx.number_connected_components(G),
-          "\n")
+    print("Number of communities = ", nx.number_connected_components(G))
 
 
 if __name__ == "__main__":
-    print("dry running as file directly executed :")
+    print("running with random inputs as file is directly executed :")
     G = nx.complete_graph(5)
+    print("")
     analyze_network(G)
+    print("")
     find_num_edges(20)
+    print("")
     find_num_comm(G)
