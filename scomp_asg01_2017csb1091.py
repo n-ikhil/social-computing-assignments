@@ -3,10 +3,11 @@ import random
 
 
 def analyze_network(G):
+    assert (type(G) == nx.Graph)
     nNodes = G.order()
     nEdges = G.size()
-    avDeg = 2 * (nEdges / nNodes)
-    avClusCoef = nx.average_clustering(G)
+    avDeg = (2 * nEdges) / nNodes if nNodes > 0 else 0
+    avClusCoef = nx.average_clustering(G) if nNodes > 0 else 0
     print("\nNumber of nodes = " + str(nNodes),
           "\nNumber of edges = " + str(nEdges),
           "\nAverage degree  = " + str(avDeg),
@@ -14,6 +15,7 @@ def analyze_network(G):
 
 
 def find_num_edges(n):
+    assert (n >= 0)
     G = nx.Graph()
     G.add_nodes_from(range(n))
     allNodes = list(G.nodes())
@@ -26,7 +28,8 @@ def find_num_edges(n):
 
 
 def find_num_comm(G):
-    while nx.is_connected(G):
+    assert (type(G) == nx.Graph and G.order() > 0)
+    while nx.is_connected(G) and G.order() > 1:
         bets = nx.edge_betweenness_centrality(G)
         betsAsList = bets.items()
         remEdge = max(betsAsList, key=lambda item: item[1])
@@ -36,9 +39,9 @@ def find_num_comm(G):
           "\n")
 
 
-# return len(nx.connected_components(G))
-
-G = nx.complete_graph(5)
-analyze_network(G)
-find_num_edges(20)
-find_num_comm(G)
+if __name__ == "__main__":
+    print("dry running as file directly executed :")
+    G = nx.complete_graph(5)
+    analyze_network(G)
+    find_num_edges(20)
+    find_num_comm(G)
