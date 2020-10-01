@@ -40,15 +40,10 @@ def closure(G):
                                             or node2[1]['type'] == 'person')):
                 k = common_neighbors(node1[0], node2[0], G)
                 p = 1 - math.pow((1 - pconnection), k)
-                cur = []
-                cur.append(node1[0])
-                cur.append(node2[0])
-                cur.append(p)
+                cur = [node1[0], node2[0], p]
                 farray.append(cur)
     for newEdge in farray:
-        u = newEdge[0]
-        v = newEdge[1]
-        p = newEdge[2]
+        [u, v, p] = newEdge
         r = random.uniform(0, 1)
         if r < p:
             G.add_edge(u, v)
